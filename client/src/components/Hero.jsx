@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 function Hero() {
+  const { isAuthenticated, user } = useAuth();
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950">
       <div className="mx-auto max-w-7xl px-6 py-24">
-        <p className="mb-3 text-cyan-400 font-semibold uppercase tracking-widest">
+        <p className="mb-3 font-semibold uppercase tracking-widest text-cyan-400">
           Welcome to
         </p>
 
@@ -21,6 +24,16 @@ function Hero() {
           React, Node.js, MongoDB and Azure DevOps.
         </p>
 
+        {isAuthenticated && (
+          <p className="mt-6 text-lg text-cyan-400">
+            Welcome back,{" "}
+            <span className="font-semibold">
+              {user?.name}
+            </span>{" "}
+            👋
+          </p>
+        )}
+
         <div className="mt-10 flex gap-4">
           <Link
             to="/movies"
@@ -29,12 +42,14 @@ function Hero() {
             Browse Movies
           </Link>
 
-          <Link
-            to="/login"
-            className="rounded-lg border border-slate-700 px-6 py-3 font-semibold text-white transition hover:border-cyan-400 hover:text-cyan-400"
-          >
-            Login
-          </Link>
+          {!isAuthenticated && (
+            <Link
+              to="/register"
+              className="rounded-lg border border-slate-700 px-6 py-3 font-semibold text-white transition hover:border-cyan-400 hover:text-cyan-400"
+            >
+              Create Account
+            </Link>
+          )}
         </div>
       </div>
     </section>
