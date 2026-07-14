@@ -67,7 +67,3 @@ frontend:
 config:
   NODE_ENV: production
   PORT: "5000"
-
-secret:
-  JWT_SECRET: "change-me"
-  MONGODB_URI: "change-me"
