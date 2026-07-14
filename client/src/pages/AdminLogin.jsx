@@ -53,7 +53,7 @@ function AdminLogin() {
           </h1>
 
           <p className="mt-2 text-slate-400">
-            DevOps TicketHub Administration
+            TicketHub Administration
           </p>
         </div>
 

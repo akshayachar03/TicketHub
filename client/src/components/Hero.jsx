@@ -12,16 +12,13 @@ function Hero() {
         </p>
 
         <h1 className="text-5xl font-extrabold text-white md:text-7xl">
-          DevOps
           <span className="block text-cyan-400">
             TicketHub
           </span>
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg text-slate-300">
-          Book movie tickets, discover trending films and web series,
-          and experience a modern movie booking platform powered by
-          React, Node.js, MongoDB and Azure DevOps.
+          Book movie tickets, explore the latest releases, and enjoy a seamless cinema booking experience with TicketHub.
         </p>
 
         {isAuthenticated && (

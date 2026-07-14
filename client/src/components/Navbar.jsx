@@ -25,7 +25,7 @@ function Navbar() {
           to="/"
           className="text-2xl font-extrabold text-cyan-400"
         >
-          🎬 DevOps TicketHub
+          🎬 TicketHub
         </Link>
 
         <nav className="flex items-center gap-8">

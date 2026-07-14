@@ -90,7 +90,7 @@ function Register() {
   return (
     <AuthLayout
       title="Create Account"
-      subtitle="Join DevOps TicketHub"
+      subtitle="Create your TicketHub account"
       footerText="Already have an account?"
       footerLink="/login"
       footerLinkText="Login"

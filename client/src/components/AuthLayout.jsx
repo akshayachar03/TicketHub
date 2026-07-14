@@ -15,7 +15,7 @@ function AuthLayout({
           to="/"
           className="mb-8 block text-center text-3xl font-bold text-cyan-400"
         >
-          🎬 DevOps TicketHub
+          🎬 TicketHub
         </Link>
 
         <h1 className="text-3xl font-bold text-white text-center">

@@ -58,7 +58,7 @@ function Login() {
   return (
     <AuthLayout
       title="Welcome Back"
-      subtitle="Sign in to your DevOps TicketHub account"
+      subtitle="Sign in to your TicketHub account"
       footerText="Don't have an account?"
       footerLink="/register"
       footerLinkText="Register"

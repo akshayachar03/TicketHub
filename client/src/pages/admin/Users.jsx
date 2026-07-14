@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import adminService from "../../services/admin.service";
+import ConfirmModal from "../../components/common/ConfirmModal";
+import {
+  showSuccess,
+  showError,
+} from "../../utils/toast";
 
 function Users() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [deleteUser, setDeleteUser] = useState(null);
 
   useEffect(() => { loadUsers(); }, []);
 
@@ -32,11 +38,22 @@ function Users() {
     loadUsers();
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Delete this user?")) return;
-    await adminService.deleteUser(id);
+  const handleDelete = async () => {
+  try {
+    await adminService.deleteUser(deleteUser._id);
+
+    showSuccess("User deleted successfully.");
+
+    setDeleteUser(null);
+
     loadUsers();
-  };
+  } catch (error) {
+    showError(
+      error?.response?.data?.message ||
+      "Unable to delete user."
+    );
+  }
+};
 
   return (
     <AdminLayout>
@@ -80,7 +97,7 @@ function Users() {
                   <td className="p-4">{new Date(user.createdAt).toLocaleDateString()}</td>
                   <td className="p-4">
                     <button
-                      onClick={()=>handleDelete(user._id)}
+                      onClick={()=>setDeleteUser(user)}
                       className="rounded bg-red-600 px-3 py-2 hover:bg-red-500"
                     >
                       Delete
@@ -97,6 +114,19 @@ function Users() {
           </table>
         </div>
       )}
+      <ConfirmModal
+  open={!!deleteUser}
+  title="Delete User"
+  message={
+    deleteUser
+      ? `Are you sure you want to delete "${deleteUser.name}"? This action cannot be undone.`
+      : ""
+  }
+  confirmText="Delete"
+  cancelText="Cancel"
+  onCancel={() => setDeleteUser(null)}
+  onConfirm={handleDelete}
+/>
     </AdminLayout>
   );
 }
