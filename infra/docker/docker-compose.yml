@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ../../server
+      dockerfile: Dockerfile
+
+    image: tickethub-backend
+    container_name: tickethub-backend
+
+    ports:
+      - "5000:5000"
+
+    env_file:
+      - ../../server/.env
+
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../../client
+      dockerfile: Dockerfile
+
+    image: tickethub-frontend
+    container_name: tickethub-frontend
+
+    ports:
+      - "80:80"
+
+    depends_on:
+      - backend
+
+    restart: unless-stopped

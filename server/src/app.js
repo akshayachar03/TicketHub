@@ -23,9 +23,10 @@ app.get("/", (req, res) => {
 
 // Health Check
 app.get("/health", (req, res) => {
-  res.json({
+  res.status(200).json({
     status: "UP",
-    service: "backend",
+    service: "TicketHub API",
+    version: "1.0.0",
     timestamp: new Date().toISOString(),
   });
 });
