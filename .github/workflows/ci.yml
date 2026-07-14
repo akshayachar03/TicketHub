@@ -89,3 +89,23 @@ jobs:
           docker build \
             -t tickethub-frontend:latest \
             ./client
+
+      # -------------------------
+      # Trivy Image Scan
+      # -------------------------
+
+      - name: Scan Backend Image
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: tickethub-backend:latest
+          format: table
+          exit-code: 1
+          severity: HIGH,CRITICAL
+
+      - name: Scan Frontend Image
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: tickethub-frontend:latest
+          format: table
+          exit-code: 1
+          severity: HIGH,CRITICAL
