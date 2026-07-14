@@ -1,6 +1,6 @@
 import MovieGrid from "./MovieGrid";
 
-function FeaturedMovies({ movies }) {
+function FeaturedMovies({ movies = [] }) {
   const featured = movies.filter((movie) => movie.featured);
 
   return (
