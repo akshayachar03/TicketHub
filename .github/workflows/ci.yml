@@ -1,0 +1,54 @@
+name: TicketHub CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # -------------------------
+      # Backend
+      # -------------------------
+
+      - name: Install Backend Dependencies
+        working-directory: server
+        run: npm ci
+
+      - name: Run Backend ESLint
+        working-directory: server
+        run: npm run lint
+
+      # -------------------------
+      # Frontend
+      # -------------------------
+
+      - name: Install Frontend Dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Run Frontend ESLint
+        working-directory: client
+        run: npm run lint
+
+      - name: Build Frontend
+        working-directory: client
+        run: npm run build
