@@ -78,24 +78,17 @@ const adminService = {
   },
 
   async updateMovie(id, data) {
-    const response = await api.put(
-      `/admin/movies/${id}`,
-      data,
-      {
-        headers: this.headers(),
-      }
-    );
+    const response = await api.put(`/admin/movies/${id}`, data, {
+      headers: this.headers(),
+    });
 
     return response.data;
   },
 
   async deleteMovie(id) {
-    const response = await api.delete(
-      `/admin/movies/${id}`,
-      {
-        headers: this.headers(),
-      }
-    );
+    const response = await api.delete(`/admin/movies/${id}`, {
+      headers: this.headers(),
+    });
 
     return response.data;
   },
@@ -110,36 +103,26 @@ const adminService = {
     return response.data;
   },
 
-  async getUser(id) {
-    const response = await api.get(
-      `/admin/users/${id}`,
-      {
-        headers: this.headers(),
-      }
-    );
+  async getUserById(id) {
+    const response = await api.get(`/admin/users/${id}`, {
+      headers: this.headers(),
+    });
 
     return response.data;
   },
 
   async updateUser(id, data) {
-    const response = await api.put(
-      `/admin/users/${id}`,
-      data,
-      {
-        headers: this.headers(),
-      }
-    );
+    const response = await api.put(`/admin/users/${id}`, data, {
+      headers: this.headers(),
+    });
 
     return response.data;
   },
 
   async deleteUser(id) {
-    const response = await api.delete(
-      `/admin/users/${id}`,
-      {
-        headers: this.headers(),
-      }
-    );
+    const response = await api.delete(`/admin/users/${id}`, {
+      headers: this.headers(),
+    });
 
     return response.data;
   },
@@ -155,12 +138,9 @@ const adminService = {
   },
 
   async getBooking(id) {
-    const response = await api.get(
-      `/admin/bookings/${id}`,
-      {
-        headers: this.headers(),
-      }
-    );
+    const response = await api.get(`/admin/bookings/${id}`, {
+      headers: this.headers(),
+    });
 
     return response.data;
   },
