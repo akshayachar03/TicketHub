@@ -3,7 +3,7 @@ kind: Ingress
 
 metadata:
   name: tickethub-ingress
-  namespace: tickethub
+  namespace: {{ .Values.namespace }}
 
 spec:
   ingressClassName: nginx
@@ -11,6 +11,7 @@ spec:
   rules:
     - http:
         paths:
+
           - path: /
             pathType: Prefix
             backend:
