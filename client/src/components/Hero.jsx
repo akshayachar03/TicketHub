@@ -18,7 +18,7 @@ function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg text-slate-300">
-          Book movie tickets, explore the latest releases, and enjoy a seamless cinema booking experience with TicketHub.
+          Book your favorite movie tickets, explore the latest releases, and enjoy a seamless cinema booking experience with TicketHub.
         </p>
 
         {isAuthenticated && (
