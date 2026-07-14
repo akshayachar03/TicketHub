@@ -1,0 +1,112 @@
+name: TicketHub CD
+
+on:
+  workflow_run:
+    workflows:
+      - TicketHub CI
+    types:
+      - completed
+
+jobs:
+  deploy:
+
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Login to Azure Container Registry
+        run: |
+          az acr login --name ${{ secrets.ACR_NAME }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # =========================
+      # Build Images
+      # =========================
+
+      - name: Build Backend Image
+        run: |
+          docker build \
+            -t ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:${{ github.event.workflow_run.head_sha }} \
+            ./server
+
+      - name: Build Frontend Image
+        run: |
+          docker build \
+            -t ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:${{ github.event.workflow_run.head_sha }} \
+            ./client
+
+      # =========================
+      # Push Images
+      # =========================
+
+      - name: Push Backend Image
+        run: |
+          docker push \
+            ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:${{ github.event.workflow_run.head_sha }}
+
+      - name: Push Frontend Image
+        run: |
+          docker push \
+            ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:${{ github.event.workflow_run.head_sha }}
+
+      # =========================
+      # Configure AKS
+      # =========================
+
+      - name: Set AKS Context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+
+      # =========================
+      # Deploy
+      # =========================
+
+      - name: Update Backend Deployment
+        run: |
+          kubectl set image deployment/tickethub-backend \
+          backend=${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:${{ github.event.workflow_run.head_sha }} \
+          -n tickethub
+
+      - name: Update Frontend Deployment
+        run: |
+          kubectl set image deployment/tickethub-frontend \
+          frontend=${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:${{ github.event.workflow_run.head_sha }} \
+          -n tickethub
+
+      # =========================
+      # Verify Deployment
+      # =========================
+
+      - name: Verify Backend Rollout
+        run: |
+          kubectl rollout status deployment/tickethub-backend -n tickethub
+
+      - name: Verify Frontend Rollout
+        run: |
+          kubectl rollout status deployment/tickethub-frontend -n tickethub
+
+      - name: Show Running Images
+        run: |
+          kubectl get deployment tickethub-backend -n tickethub -o wide
+          kubectl get deployment tickethub-frontend -n tickethub -o wide

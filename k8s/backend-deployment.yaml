@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: tickethub-backend
+  namespace: tickethub
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: tickethub-backend
+
+  template:
+    metadata:
+      labels:
+        app: tickethub-backend
+
+    spec:
+      containers:
+        - name: backend
+
+          image: tickethubacr2026.azurecr.io/tickethub-backend:latest
+
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 5000
+
+          envFrom:
+            - configMapRef:
+                name: tickethub-config
+
+            - secretRef:
+                name: tickethub-secret
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+
+            initialDelaySeconds: 20
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+
+            initialDelaySeconds: 10
+            periodSeconds: 5
