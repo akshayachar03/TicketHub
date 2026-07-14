@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
 
     env:
       IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
@@ -25,13 +25,15 @@ jobs:
     steps:
 
       # =====================================================
-      # Checkout
+      # Checkout Repository
       # =====================================================
 
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # =====================================================
       # Azure Login
@@ -43,32 +45,32 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # =====================================================
-      # Login to ACR
+      # Login to Azure Container Registry
       # =====================================================
 
       - name: Login to Azure Container Registry
-        run: |
-          az acr login --name ${{ secrets.ACR_NAME }}
+        run: az acr login --name ${{ secrets.ACR_NAME }}
 
       # =====================================================
-      # Docker Buildx
+      # Setup Docker Buildx
       # =====================================================
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       # =====================================================
-      # Build Backend
+      # Build Backend Image
       # =====================================================
 
       - name: Build Backend Image
         run: |
           docker build \
             -t ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:${IMAGE_TAG} \
+            -t ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:latest \
             ./server
 
       # =====================================================
-      # Build Frontend
+      # Build Frontend Image
       # =====================================================
 
       - name: Build Frontend Image
@@ -76,69 +78,67 @@ jobs:
           docker build \
             --build-arg VITE_API_URL=/api/v1 \
             -t ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:${IMAGE_TAG} \
+            -t ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:latest \
             ./client
 
       # =====================================================
-      # Push Images
+      # Push Backend Images
       # =====================================================
 
-      - name: Push Backend Image
+      - name: Push Backend Images
         run: |
-          docker push \
-            ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:${IMAGE_TAG}
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:${IMAGE_TAG}
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:latest
 
-      - name: Push Frontend Image
+      # =====================================================
+      # Push Frontend Images
+      # =====================================================
+
+      - name: Push Frontend Images
         run: |
-          docker push \
-            ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:${IMAGE_TAG}
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:${IMAGE_TAG}
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:latest
 
       # =====================================================
-      # Configure AKS
+      # Update Helm values.yaml
       # =====================================================
 
-      - name: Set AKS Context
-        uses: azure/aks-set-context@v4
+      - name: Update Backend Image Tag
+        uses: mikefarah/yq@v4
         with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+          cmd: >
+            yq -i '.backend.image.tag = strenv(IMAGE_TAG)'
+            helm/tickethub/values.yaml
+
+      - name: Update Frontend Image Tag
+        uses: mikefarah/yq@v4
+        with:
+          cmd: >
+            yq -i '.frontend.image.tag = strenv(IMAGE_TAG)'
+            helm/tickethub/values.yaml
 
       # =====================================================
-      # Deploy Backend
+      # Commit Changes
       # =====================================================
 
-      - name: Update Backend Deployment
+      - name: Commit Updated Helm Values
         run: |
-          kubectl set image deployment/tickethub-backend \
-            backend=${{ secrets.ACR_NAME }}.azurecr.io/tickethub-backend:${IMAGE_TAG} \
-            -n tickethub
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add helm/tickethub/values.yaml
+
+          if git diff --cached --quiet; then
+            echo "No changes detected."
+            exit 0
+          fi
+
+          git commit -m "chore: update image tags to ${IMAGE_TAG}"
 
       # =====================================================
-      # Deploy Frontend
+      # Push Changes
       # =====================================================
 
-      - name: Update Frontend Deployment
+      - name: Push Changes
         run: |
-          kubectl set image deployment/tickethub-frontend \
-            frontend=${{ secrets.ACR_NAME }}.azurecr.io/tickethub-frontend:${IMAGE_TAG} \
-            -n tickethub
-
-      # =====================================================
-      # Verify Rollout
-      # =====================================================
-
-      - name: Verify Backend Rollout
-        run: |
-          kubectl rollout status deployment/tickethub-backend -n tickethub
-
-      - name: Verify Frontend Rollout
-        run: |
-          kubectl rollout status deployment/tickethub-frontend -n tickethub
-
-      # =====================================================
-      # Show Running Images
-      # =====================================================
-
-      - name: Show Running Images
-        run: |
-          kubectl get deployment tickethub-backend -n tickethub -o wide
-          kubectl get deployment tickethub-frontend -n tickethub -o wide
+          git push origin main
