@@ -90,22 +90,22 @@ jobs:
             -t tickethub-frontend:latest \
             ./client
 
-# -------------------------
-# Trivy Image Scan
-# -------------------------
+      # -------------------------
+      # Trivy Image Scan
+      # -------------------------
 
-- name: Scan Backend Image
-  uses: aquasecurity/trivy-action@v0.36.0
-  with:
-    image-ref: tickethub-backend:latest
-    format: table
-    severity: HIGH,CRITICAL
-    exit-code: 0
+      - name: Scan Backend Image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: tickethub-backend:latest
+          format: table
+          severity: HIGH,CRITICAL
+          exit-code: 0
 
-- name: Scan Frontend Image
-  uses: aquasecurity/trivy-action@v0.36.0
-  with:
-    image-ref: tickethub-frontend:latest
-    format: table
-    severity: HIGH,CRITICAL
-    exit-code: 0
+      - name: Scan Frontend Image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: tickethub-frontend:latest
+          format: table
+          severity: HIGH,CRITICAL
+          exit-code: 0
