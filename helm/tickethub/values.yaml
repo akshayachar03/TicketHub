@@ -1,69 +1,54 @@
 namespace: tickethub
-
 backend:
   replicaCount: 2
-
   image:
     repository: tickethubacr2026.azurecr.io/tickethub-backend
-    tag: latest
+    tag: e7365ad4967ea3b428d6f3295ad7a978e7d75e91
     pullPolicy: Always
-
   service:
     type: ClusterIP
     port: 5000
-
   resources:
     requests:
       cpu: "250m"
       memory: "256Mi"
-
     limits:
       cpu: "500m"
       memory: "512Mi"
-
   probes:
     liveness:
       path: /health
       initialDelaySeconds: 20
       periodSeconds: 10
-
     readiness:
       path: /health
       initialDelaySeconds: 10
       periodSeconds: 5
-
 frontend:
   replicaCount: 2
-
   image:
     repository: tickethubacr2026.azurecr.io/tickethub-frontend
-    tag: latest
+    tag: e7365ad4967ea3b428d6f3295ad7a978e7d75e91
     pullPolicy: Always
-
   service:
     type: ClusterIP
     port: 80
-
   resources:
     requests:
       cpu: "100m"
       memory: "128Mi"
-
     limits:
       cpu: "250m"
       memory: "256Mi"
-
   probes:
     liveness:
       path: /
       initialDelaySeconds: 15
       periodSeconds: 10
-
     readiness:
       path: /
       initialDelaySeconds: 10
       periodSeconds: 5
-
 config:
   NODE_ENV: production
   PORT: "5000"
