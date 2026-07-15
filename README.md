@@ -1638,7 +1638,7 @@ The following screenshots demonstrate the complete software delivery lifecycle o
 The TicketHub web application provides a responsive interface for browsing movies, selecting theaters, and booking tickets.
 
 <p align="center">
-  <img src="screenshots/Application.png" width="100%">
+  <img src="Screenshots/Application.png" width="100%">
 </p>
 
 ---
