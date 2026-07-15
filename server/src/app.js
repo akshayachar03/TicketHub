@@ -16,7 +16,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-//app.use(metricsMiddleware);
+app.use(metricsMiddleware);
 
 // Root Route
 app.get("/", (req, res) => {
