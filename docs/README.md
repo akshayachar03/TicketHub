@@ -1,41 +1,68 @@
-# 📚 TicketHub Documentation
+# 📚 Documentation
 
-Welcome to the TicketHub project documentation.
+Welcome to the TicketHub documentation.
 
-This folder contains detailed documentation about the project, including the architecture, DevOps implementation, Kubernetes deployment, monitoring setup, troubleshooting, and interview preparation.
+This directory contains detailed documentation covering the project's architecture, DevOps implementation, deployment workflow, monitoring, troubleshooting, and interview preparation.
 
-## 📖 Documents
+---
 
-| File                               | Description                                                           |
-| ---------------------------------- | --------------------------------------------------------------------- |
-| 01-Project-Overview.md             | Project overview and objectives                                       |
-| 02-System-Architecture.md          | High-level system architecture                                        |
-| 03-Application-Architecture.md     | Frontend, backend, and database architecture                          |
-| 04-DevOps-Implementation.md        | Complete DevOps implementation journey                                |
-| 05-CI-CD-Pipeline.md               | GitHub Actions CI/CD pipeline                                         |
-| 06-GitOps-with-ArgoCD.md           | GitOps workflow using Argo CD                                         |
-| 07-Kubernetes-Deployment.md        | Kubernetes resources and deployment                                   |
-| 08-Monitoring-and-Observability.md | Prometheus, Grafana, and Azure Monitor                                |
-| 09-Azure-Infrastructure.md         | Azure resources used in the project                                   |
-| 10-Step-by-Step-Deployment.md      | Deployment guide with commands                                        |
-| 11-Commands-Reference.md           | Frequently used Docker, Kubernetes, Helm, Git, and Azure CLI commands |
-| 12-Troubleshooting-Guide.md        | Problems faced during the project and their solutions                 |
-| 13-Lessons-Learned.md              | Key learnings from the project                                        |
-| 14-Project-Walkthrough.md          | How to explain the project in an interview                            |
-| 15-Interview-Questions.md          | Common interview questions based on the project                       |
-| 16-Cross-Questions.md              | Advanced follow-up interview questions                                |
-| 17-Future-Improvements.md          | Future enhancements for the project                                   |
+## Documentation Structure
 
-## 🎯 Purpose
+### Project Overview
 
-The goal of this documentation is to explain:
+- [01 - Project Overview](01-Project-Overview.md)
+- [02 - System Architecture](02-System-Architecture.md)
 
-* How the project was built
-* How it was deployed
-* How monitoring was implemented
-* Problems faced during development and deployment
-* Solutions for those problems
-* Commands used throughout the project
-* How to explain the project confidently in interviews
+---
 
-Happy Learning! 🚀
+### DevOps Implementation
+
+The **03-DevOps-Implementation** folder contains detailed documentation for each DevOps technology used in the project.
+
+- Docker
+- Azure Container Registry (ACR)
+- Azure Kubernetes Service (AKS)
+- Helm
+- GitHub Actions
+- Argo CD
+- Prometheus
+- Grafana
+- Azure Monitor
+- Log Analytics
+
+---
+
+### Deployment & Infrastructure
+
+- [04 - CI/CD Pipeline](04-CI-CD-Pipeline.md)
+- [05 - GitOps with Argo CD](05-GitOps-with-ArgoCD.md)
+- [06 - Kubernetes Deployment](06-Kubernetes-Deployment.md)
+- [07 - Monitoring & Observability](07-Monitoring-and-Observability.md)
+- [08 - Azure Infrastructure](08-Azure-Infrastructure.md)
+- [09 - Step-by-Step Deployment](09-Step-by-Step-Deployment.md)
+
+---
+
+### Interview Preparation
+
+- [10 - Project Walkthrough](10-Project-Walkthrough.md)
+- [11 - Troubleshooting Guide](11-Troubleshooting-Guide.md)
+- [12 - How I Would Explain This Project to an Interviewer](12-How-I-Would-Explain-This-To-An-Interviewer.md)
+- [13 - Interview Questions](13-Interview-Questions.md)
+- [14 - Cross Questions](14-Cross-Questions.md)
+- [15 - Architecture Decisions](15-Architecture-Decisions.md)
+
+---
+
+## Purpose
+
+The documentation is divided into four sections:
+
+- **Project Documentation** – Overall project overview and architecture.
+- **DevOps Documentation** – Detailed implementation of each DevOps tool.
+- **Deployment Documentation** – CI/CD, GitOps, Kubernetes, Azure, and monitoring.
+- **Interview Preparation** – Documents created to explain, troubleshoot, and discuss the project confidently during technical interviews.
+
+---
+
+**Note:** The primary focus of this project is the DevOps implementation, including containerization, Kubernetes orchestration, CI/CD automation, GitOps, monitoring, and troubleshooting on Microsoft Azure.
