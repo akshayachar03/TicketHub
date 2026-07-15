@@ -3,7 +3,7 @@ backend:
   replicaCount: 1
   image:
     repository: tickethubacr2026.azurecr.io/tickethub-backend
-    tag: 34743a8bf5feaf08bab602fe38e47157ee4ecb66
+    tag: 52c22154726c835ede7650c35c54e2f3a97830b4
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -28,7 +28,7 @@ frontend:
   replicaCount: 1
   image:
     repository: tickethubacr2026.azurecr.io/tickethub-frontend
-    tag: 34743a8bf5feaf08bab602fe38e47157ee4ecb66
+    tag: 52c22154726c835ede7650c35c54e2f3a97830b4
     pullPolicy: Always
   service:
     type: ClusterIP
