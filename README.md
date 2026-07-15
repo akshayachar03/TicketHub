@@ -167,7 +167,7 @@ J --> L[Backend API]
 
 L --> M[MongoDB Atlas]
 
-L --> N[/metrics]
+L --> N["/metrics"]
 
 N --> O[Prometheus]
 
@@ -226,7 +226,7 @@ flowchart LR
 
 A[Backend]
 
-A --> B[/metrics]
+A --> B["/metrics"]
 
 B --> C[ServiceMonitor]
 
@@ -1227,7 +1227,7 @@ flowchart TD
 
 A[Backend API]
 
-A --> B[/metrics]
+A --> B["/metrics"]
 
 B --> C[ServiceMonitor]
 
