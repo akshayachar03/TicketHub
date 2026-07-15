@@ -6,12 +6,17 @@ import theaterRoutes from "./routes/theater.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import bookingRoutes from "./routes/booking.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
+import register from "./monitoring/prometheus.js";
+import metricsMiddleware from "./middleware/metrics.middleware.js";
+
+console.log("✅ app.js loaded");
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+//app.use(metricsMiddleware);
 
 // Root Route
 app.get("/", (req, res) => {
@@ -29,6 +34,11 @@ app.get("/health", (req, res) => {
     version: "1.0.0",
     timestamp: new Date().toISOString(),
   });
+});
+
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", register.contentType);
+  res.end(await register.metrics());
 });
 
 // API Routes
