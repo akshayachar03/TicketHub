@@ -1638,108 +1638,98 @@ The following screenshots demonstrate the complete software delivery lifecycle o
 The TicketHub web application provides a responsive interface for browsing movies, selecting theaters, and booking tickets.
 
 <p align="center">
-  <img src="Screenshots/Application.png" width="100%">
+  <img src="Screenshots/01-Application.png" width="100%">
 </p>
 
 ---
 
 ## ⚙️ GitHub Actions
 
-GitHub Actions automates the complete CI/CD workflow, including application build, Docker image creation, publishing images to Azure Container Registry (ACR), and updating the Helm deployment configuration.
+GitHub Actions automates the CI/CD workflow.
 
-> **Screenshot Placeholder**
->
-> *GitHub Actions workflow execution*
+<p align="center">
+  <img src="Screenshots/02-GitHub Actions.png" width="100%">
+</p>
 
 ---
 
 ## 🚢 Azure Container Registry (ACR)
 
-Docker images are automatically versioned using the Git commit SHA and stored in Azure Container Registry.
+Docker images are automatically pushed to Azure Container Registry.
 
-> **Screenshot Placeholder**
->
-> *Azure Container Registry repositories*
+<p align="center">
+  <img src="Screenshots/03-ACR.png" width="100%">
+</p>
 
 ---
 
 ## 🔄 Argo CD
 
-Argo CD continuously synchronizes the Kubernetes cluster with the Git repository, implementing a GitOps deployment strategy.
+Argo CD continuously synchronizes the Kubernetes cluster with Git.
 
-> **Screenshot Placeholder**
->
-> *Argo CD Application (Healthy & Synced)*
+<p align="center">
+  <img src="Screenshots/04- Argo CD.png" width="100%">
+</p>
 
 ---
 
 ## ☸️ Azure Kubernetes Service (AKS)
 
-The application is deployed on Azure Kubernetes Service using Kubernetes Deployments, Services, Ingress, ConfigMaps, and Secrets.
+The application is deployed on Azure Kubernetes Service.
 
-> **Screenshot Placeholder**
->
-> *AKS Workloads or Running Pods*
+<p align="center">
+  <img src="Screenshots/05-AKS workloads.png" width="100%">
+</p>
 
 ---
 
 ## 📊 Grafana Dashboard
 
-Grafana provides real-time visualization of application performance, Kubernetes resources, and infrastructure metrics.
+Grafana visualizes application and infrastructure metrics.
 
-Dashboard highlights include:
-
-* Requests per Second
-* Total Requests
-* Response Time
-* HTTP Status Codes
-* Pod CPU Usage
-* Pod Memory Usage
-* Node Resource Utilization
-
-> **Screenshot Placeholder**
->
-> *Grafana Dashboard*
+<p align="center">
+  <img src="Screenshots/06- Grafana Dashboard.png" width="100%">
+</p>
 
 ---
 
 ## 📈 Prometheus
 
-Prometheus collects metrics from the backend application through the `/metrics` endpoint using a Kubernetes ServiceMonitor.
+Prometheus scrapes application metrics from the backend.
 
-> **Screenshot Placeholder**
->
-> *Prometheus Targets*
+<p align="center">
+  <img src="Screenshots/07-Prometheus targets.png" width="100%">
+</p>
 
 ---
 
 ## ☁️ Azure Monitor
 
-Azure Monitor provides Azure-native observability, including Container Insights, infrastructure monitoring, and Kubernetes resource monitoring.
+Azure Monitor provides cloud-native observability.
 
-> **Screenshot Placeholder**
->
-> *Azure Monitor Insights*
+<p align="center">
+  <img src="Screenshots/08-Azure Monitor Insights.png" width="100%">
+</p>
 
 ---
 
 ## 📝 Azure Log Analytics
 
-Application and infrastructure logs are centralized in Azure Log Analytics and can be queried using Kusto Query Language (KQL).
+Logs are collected and queried using Kusto Query Language (KQL).
 
-> **Screenshot Placeholder**
->
-> *Log Analytics Query Results*
+<p align="center">
+  <img src="Screenshots/09-Azure Monitor Logs.png" width="100%">
+</p>
 
 ---
 
 ## 🏛️ Overall Architecture
 
-The following architecture summarizes the complete deployment and monitoring workflow implemented in this project.
+The following architecture summarizes the complete deployment workflow.
 
-> **Screenshot Placeholder**
->
-> *Architecture Diagram*
+<p align="center">
+  <img src="Screenshots/10-Architectural diagram.png" width="100%">
+</p>
 
 # 🚀 Future Enhancements
 
