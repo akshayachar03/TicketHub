@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+
+metadata:
+  name: tickethub-backend
+  namespace: monitoring
+  labels:
+    release: monitoring
+
+spec:
+  selector:
+    matchLabels:
+      app: tickethub-backend
+
+  namespaceSelector:
+    matchNames:
+      - tickethub
+
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

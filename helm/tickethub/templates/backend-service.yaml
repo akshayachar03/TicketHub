@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: tickethub-backend-service
   namespace: {{ .Values.namespace }}
+  labels:
+    app: tickethub-backend
 
 spec:
   type: {{ .Values.backend.service.type }}
@@ -12,5 +14,7 @@ spec:
     app: tickethub-backend
 
   ports:
-    - port: {{ .Values.backend.service.port }}
+    - name: http
+      port: {{ .Values.backend.service.port }}
       targetPort: {{ .Values.backend.service.port }}
+      protocol: TCP
